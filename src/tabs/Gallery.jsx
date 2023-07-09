@@ -11,6 +11,7 @@ export class Gallery extends Component {
     isLoading: false,
     error: null,
     isEmpty: false,
+    isVisibleBtn: false,
   };
   componentDidMount() {
     // ImageService.getImages('cat', 1);
@@ -19,21 +20,21 @@ export class Gallery extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { query, page } = this.state;
     if (prevState.query !== query || prevState.page !== page) {
-      this.getImeges(query, page);
+      this.getImages(query, page);
     }
   }
 
-  getImeges = async (query, page) => {
+  getImages = async (query, page) => {
     try {
       this.setState({ isLoading: true });
-      const response = await ImageService.getImages(query, page);
-      console.log(response);
-      if (response.photos.length === 0) {
+      const { page: currentPage, per_page, photos, total_results }= await ImageService.getImages(query, page);
+      if (photos.length === 0) {
         this.setState({ isEmpty: true });
         return;
       }
       this.setState(prevState => ({
-        imagesList: [...prevState.imagesList, ...response.photos],
+        imagesList: [...prevState.imagesList, ...photos],
+        isVisibleBtn: currentPage < Math.ceil(total_results / per_page),
       }));
     } catch (error) {
       console.log(error);
@@ -44,7 +45,15 @@ export class Gallery extends Component {
 
   onSubmit = query => {
     console.log(query);
-    this.setState({ query });
+    this.setState({ 
+      query, 
+      page: 1, 
+      imagesList: [], 
+      isLoading: false,
+      error: null,
+      isEmpty: false,
+      isVisibleBtn: false 
+    });
   };
 
   onLoadMore = () => {
@@ -52,7 +61,7 @@ export class Gallery extends Component {
   };
 
   render() {
-    const { imagesList, isLoading, isEmpty } = this.state;
+    const { imagesList, isLoading, isEmpty, isVisibleBtn} = this.state;
     return (
       <>
         <SearchForm onSubmit={this.onSubmit} />
@@ -69,9 +78,9 @@ export class Gallery extends Component {
         {isEmpty && (
           <Text textAlign="center">Sorry. There are no images ... 😭</Text>
         )}
-        <Button type="buttom" onClick={this.onLoadMore}>
+        {isVisibleBtn && (<Button type="buttom" onClick={this.onLoadMore} >
           Load more
-        </Button>
+        </Button>)}
       </>
     );
   }
