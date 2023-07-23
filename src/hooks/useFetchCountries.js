@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { fetchByRegion } from 'service/country-service';
 
-export const useFetchCountries = () => {
+export const useFetchCountries = (id) => {
   const [countries, setCountries] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getCountries = async () => {
-      const result = await fetchByRegion();
+      const result = await fetchByRegion(id);
       //   console.log()
       setCountries(result);
     };
@@ -21,7 +21,7 @@ export const useFetchCountries = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [id]);
 
   return { countries, error, loading };
 };
