@@ -2,7 +2,7 @@ import { Container, CountryList, Heading, Loader, Section } from 'components';
 import { useFetchCountries } from 'hooks/useFetchCountries';
 
 export const Home = () => {
-  const { countries, error, loading } = useFetchCountries();
+  const { countries, error, loading } = useFetchCountries('europe');
 
   return (
     <Section>

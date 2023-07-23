@@ -13,7 +13,7 @@ const regions = [
 
 export const SearchForm = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [region, setRegion] = useState(searchParams.get('query') ?? '');
+  const [region, setRegion] = useState(searchParams.get('query') ?? 'europe');
 
   const handleChange = ({ target: { value } }) => {
     setRegion(value);
@@ -30,16 +30,13 @@ export const SearchForm = () => {
         <FiSearch size="16px" />
       </BtnSearch>
       <Select
-        defaultValue=""
-        // value={region}
+        value={region}
         aria-label="select"
         name="region"
         required
         onChange={handleChange}
       >
-        <option selected disabled defaultValue="">
-          Select a region and press enter
-        </option>
+        <option disabled>Select a region and press enter</option>
         {regions &&
           regions.map(({ id, name, value }) => (
             <option key={id} value={value}>

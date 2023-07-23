@@ -1,4 +1,4 @@
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import {
   Container,
   SearchForm,
@@ -10,9 +10,10 @@ import {
 import { useFetchCountries } from 'hooks/useFetchCountries';
 
 export const CountrySearch = () => {
-  const [query, setQuery] = useSearchParams();
-
-  const { countries, error, loading } = useFetchCountries(query.get('query'));
+  const [query] = useSearchParams();
+  const { countries, error, loading } = useFetchCountries(
+    query.get('query') ?? 'europe',
+  );
 
   return (
     <Section>
