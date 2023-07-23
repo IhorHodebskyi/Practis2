@@ -1,7 +1,16 @@
-import { IoLogoReact } from 'react-icons/io5';
-import { NavBar, HeaderWrapper, NavText } from './Header.styled';
-import { Container } from 'components';
 import { useTheme } from '@emotion/react';
+import { Container } from 'components/App/App.styled';
+
+import { FaFlagUsa } from 'react-icons/fa';
+import { Outlet } from 'react-router-dom';
+import { routes } from 'routes';
+import {
+  HeaderWrapper,
+  LinkWrapper,
+  NavBar,
+  NavLinkStyled,
+} from './Header.styled';
+import { Suspense } from 'react';
 
 export const Header = () => {
   const theme = useTheme();
@@ -11,12 +20,18 @@ export const Header = () => {
       <NavBar>
         <Container>
           <HeaderWrapper>
-            <IoLogoReact size="40px" color={theme.colors.accent} />
+            <FaFlagUsa size="40px" color={theme.colors.light} />
 
-            <NavText>Lesson 2</NavText>
+            <LinkWrapper>
+              <NavLinkStyled to={routes.HOME}>Home</NavLinkStyled>
+              <NavLinkStyled to={routes.COUNTRY}>Countries</NavLinkStyled>
+            </LinkWrapper>
           </HeaderWrapper>
         </Container>
       </NavBar>
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </>
   );
 };

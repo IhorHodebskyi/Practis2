@@ -1,38 +1,31 @@
-import { Component } from 'react';
-
 import { FiSearch } from 'react-icons/fi';
-import { FormBtn, InputSearch, SearchFormStyled } from './SearchForm.styled';
+import { BtnSearch, Select, SearchFormStyled } from './SearchForm.styled';
 
-export class SearchForm extends Component {
-  state = {
-    query: '',
-  };
+const regions = [
+  { id: 'africa', value: 'africa', name: 'Africa' },
+  { id: 'america', value: 'america', name: 'America' },
+  { id: 'asia', value: 'asia', name: 'Asia' },
+  { id: 'europe', value: 'europe', name: 'Europe' },
+  { id: 'oceania', value: 'oceania', name: 'Oceania' },
+];
 
-  handleSubmit = event => {
-    event.preventDefault();
-    this.props.onSubmit(this.state.query);
-    this.setState({ query: '' });
-  };
-  handleChange = event => {
-    this.setState({ query: event.target.value });
-  };
-
-  render() {
-    const { query } = this.state;
-    return (
-      <SearchFormStyled onSubmit={this.handleSubmit}>
-        <FormBtn type="submit">
-          <FiSearch size="16px" />
-        </FormBtn>
-        <InputSearch
-          placeholder="What do you want to write?"
-          name="search"
-          value={query}
-          onChange={this.handleChange}
-          required
-          autoFocus
-        />
-      </SearchFormStyled>
-    );
-  }
-}
+export const SearchForm = () => {
+  return (
+    <SearchFormStyled>
+      <BtnSearch type="submit">
+        <FiSearch size="16px" />
+      </BtnSearch>
+      <Select aria-label="select" name="region" required>
+        <option selected disabled defaultValue="">
+          Select a region and press enter
+        </option>
+        {regions &&
+          regions.map(({ id, name, value }) => (
+            <option key={id} value={value}>
+              {name}
+            </option>
+          ))}
+      </Select>
+    </SearchFormStyled>
+  );
+};
