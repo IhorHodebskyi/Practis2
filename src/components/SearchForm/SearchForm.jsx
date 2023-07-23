@@ -30,8 +30,8 @@ export const SearchForm = () => {
         <FiSearch size="16px" />
       </BtnSearch>
       <Select
-        defaultValue={region}
-        value={region}
+        defaultValue=""
+        // value={region}
         aria-label="select"
         name="region"
         required
