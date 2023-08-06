@@ -41,10 +41,20 @@ const ToDoSlice = createSlice({
         }
       });
     },
+
+    editeToDo: (state, { payload: { id, query } }) => {
+      state.items = state.items.map(todo => {
+        if (todo.id === id) {
+          return { ...todo, text: query };
+        } else {
+          return todo;
+        }
+      });
+    },
   },
 });
 
-export const { addTodo, deleteToDo, incrementLike, decrementLike } =
+export const { addTodo, deleteToDo, incrementLike, decrementLike, editeToDo } =
   ToDoSlice.actions;
 export default ToDoSlice.reducer;
 export const selectToDos = state => state.items;
