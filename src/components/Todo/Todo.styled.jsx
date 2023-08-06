@@ -27,6 +27,16 @@ export const DeleteButton = styled.button`
   }
 `;
 
+export const LikeButton = styled.button`
+  padding: ${({ theme }) => theme.spacing(2.5)};
+  transition: transform ${({ theme }) => theme.animation.cubicBezier};
+
+  &:hover,
+  &:focus {
+    transform: scale(1.05);
+  }
+`;
+
 export const EditButton = styled.button`
   position: absolute;
   bottom: 0;

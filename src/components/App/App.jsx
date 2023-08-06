@@ -16,7 +16,7 @@ import { ToDoList } from 'components/ToDoList/ToDoList';
 export const App = () => {
   // state = {
   //   todos: [],
-  // };
+  // };np
 
   // componentDidMount() {
   //   const todos = JSON.parse(localStorage.getItem('todos'));
